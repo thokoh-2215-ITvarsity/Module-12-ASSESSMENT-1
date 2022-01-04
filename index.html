@@ -1,0 +1,111 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body onload="fetchContacts()">
+        
+        <div id="table">Contacts loading...</div>
+        <button id="refresh" type="button">Refresh</button>
+        <button id="addContact" type="button">Add Contact</button>
+        
+        <div class="container team">
+            <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="images/background.jpg" class="d-block w-100" />
+                <div class="carousel-caption">
+                    <h1>Hello, Sawubona</h1>
+                    <p>You Can Call Me</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="images/bacground image.png" class="d-block w-100" />
+                <div class="carousel-caption">
+                    <h1>messege box</h1>
+                    <p>How Are You?</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <img src="images/jah.jpg" class="img-thumbnail rounded-circle" width="160"/>
+                    <h2> Zamile mbokazi</h2>
+                    <p>Let's get connected.</p>
+                    <p><a href="#" class="btn btn-secondary" role="button">View details</a></p>
+                </div>
+                <div class="col-lg-4">
+                    <img src="images/biby.jpg" class="img-thumbnail rounded-circle" width="160"/>
+                    <h2>Minenhle Mbokazi</h2>
+                    <p>connection is the best way.</p>
+                    <p><a href="#" class="btn btn-secondary" role="button">View details</a></p>
+                </div>   
+                <div class="col-lg-4">
+                    <img src="images/phee.jpg" class="img-thumbnail rounded-circle" width="160"/>
+                    <h2>Philani Mwelase</h2>
+                    <p>Let's be friends.</p>
+                    <p><a href="#" class="btn btn-secondary" role="button">View details</a></p>
+                </div>  
+                <div class="col-lg-4">
+                    <img src="images/qee.jpg" class="img-thumbnail rounded-circle" width="160"/>
+                    <h2>Nonhlanhla Mdlalose</h2>
+                    <p>Let's get in touch.</p>
+                    <p><a href="#" class="btn btn-secondary" role="button">View details</a></p>
+                </div>  
+                <div class="col-lg-4">
+                    <img src="images/thah.jpg" class="img-thumbnail rounded-circle" width="160"/>
+                    <h2>Thandeka Ndlovu</h2>
+                    <p>Chat with me.</p>
+                    <p><a href="#" class="btn btn-secondary" role="button">View details</a></p>
+                </div>  
+                <div class="col-lg-4">
+                    <img src="images/ndalo.jpg" class="img-thumbnail rounded-circle" width="160"/>
+                    <h2>Kwandokuhle Kweyama</h2>
+                    <p>Let's be friends.</p>
+                    <p><a href="#" class="btn btn-secondary" role="button">View details</a></p>
+                </div>
+                </div>
+            </div>
+        </div>
+        
+        <script src="config.js"></script>
+        <script>
+            document.getElementById("refresh").addEventListener('click', fetchContacts);
+             document.getElementById("addContact").addEventListener('click', addContact);
+            
+            function fetchContacts(){
+                fetch(rootPath + "controller/get-contacts/")
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(data){
+                    displayOutput(data);
+                    //console.log(data);
+                })
+            }
+            
+            function displayOutput(data){
+                output = "<table>";
+                
+                for(a in data){
+                    output += `
+                        <tr onclick="editContact(${data[a].id})">
+                            <td><img src="${rootPath}controller/uploads/${data[a].avatar}" width="40"/></td>
+                            <td><h5>${data[a].firstname}</h5></td>
+                            <td><h5>${data[a].lastname}</h5></td>
+                        </tr>
+                    `
+                }
+                output += "</table>";
+                document.getElementById("table").innerHTML = output;
+            }
+            
+            function addContact(){
+                window.open("add-contact.html", "_self");
+            }
+            
+            function editContact(id){
+                window.open("edit-contact.html?id=" + id, "_self");
+            }
+            
+        </script>
+    </body>
+</html>
